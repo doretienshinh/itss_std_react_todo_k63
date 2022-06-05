@@ -1,33 +1,16 @@
 import React, { useState } from 'react';
 
-/* 
-  【Todoのデータ構成】
-　・key：Todoを特定するID（String）
-　・text：Todoの内容（String）
-　・done：完了状態（Boolean true:完了済み,, false:未完了）
-*/
-
-/* コンポーネント */
 import TodoItem from './TodoItem';
 import Input from './Input';
 import Filter from './Filter';
 
-/* カスタムフック */
 import useStorage from '../hooks/storage';
 
-/* ライブラリ */
-import {getKey} from "../lib/util";
 
 const filterItems = ['全て', '未完了', '完了済み'];
 
 function Todo() {
-  const [items, setItems] = React.useState([
-      /* テストコード 開始 */
-    { key: getKey(), text: '日本語の宿題', done: false },
-    { key: getKey(), text: 'reactを勉強する', done: false },
-    { key: getKey(), text: '明日の準備をする', done: false },
-    /* テストコード 終了 */
-  ]);
+  const [items, putItems, clearItems] = useStorage();
 
   const [filter, setFilter] = React.useState('全て');
 
@@ -42,7 +25,7 @@ function Todo() {
   }, [filter, items]);
 
   const handleClick = (key) =>
-    setItems(
+    putItems(
       items.map((item) => {
         if (item.key === key) {
           return { ...item, done: !item.done };
@@ -51,7 +34,7 @@ function Todo() {
       })
     );
 
-  const addTodo = (todo) => setItems([...items, todo]);
+  const addTodo = (todo) => putItems([...items, todo]);
 
   return (
     <div className="panel">
@@ -65,6 +48,11 @@ function Todo() {
       ))}
       <div className="panel-block">
         {filterData.length} items
+      </div>
+      <div className="panel-block">
+        <button onClick={clearItems} className="button is-fullwidth">
+          全てのToDoを削除する
+        </button>
       </div>
     </div>
   );
