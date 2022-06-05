@@ -36,11 +36,15 @@ function Todo() {
         return item;
       })
     );
+
+  const addTodo = (todo) => setItems([...items, todo]);
+
   return (
     <div className="panel">
       <div className="panel-heading">
         ITSS ToDoアプリ
       </div>
+      <Input addTodo={addTodo} />
       {items.map(item => (
         <TodoItem handleClick={handleClick} key={item.key} item={item} />
       ))}
