@@ -1,21 +1,26 @@
-function Filter({ filterItems, filter, setFilter }) {
-  const handleClick = (e, filter) => {
+function Filter( {value, onChange} ) {
+  const handleClick = (key, e) => {
     e.preventDefault();
-    setFilter(filter);
+    onChange(key);
   };
 
   return (
     <div className="panel-tabs">
-      {filterItems.map((tabItem, index) => (
-        <a
-          key={index}
-          href="/"
-          className={`${filter === tabItem ? 'is-active' : ''}`}
-          onClick={(e) => handleClick(e, tabItem)}
-        >
-          {tabItem}
-        </a>
-      ))}
+      <a
+        href="/#"
+        onClick={handleClick.bind(null, 'ALL')}
+        className={value === 'ALL' ?  'is-active' : ''}
+      >全て</a>
+      <a
+        href="/#"
+        onClick={handleClick.bind(null, 'TODO')}
+        className={value === 'TODO' ?  'is-active' : ''}
+      >未完了</a>
+      <a
+        href="/#"
+        onClick={handleClick.bind(null, 'DONE')}
+        className={value === 'DONE' ?  'is-active' : ''}
+      >完了済み</a>
     </div>
   );
 }
