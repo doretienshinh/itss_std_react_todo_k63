@@ -1,15 +1,14 @@
-/* 
-  【TodoItemコンポーネント】
-　・Todoアイテムを表示する
-　・チェックボックスにチェックが入っているか管理する
-　・チェックボックスにチェックが入っているかアイテムをグレーアウトする
-*/
-function TodoItem({item, handleClick}) {
+function TodoItem({ item, onCheck }) {
+  const handleChange = () => {
+    onCheck(item);
+  };
   return (
-    <label className={`panel-block ${item.done ? 'has-text-grey-light' : ''}`}>
-            <input checked={item.done} onChange={() => handleClick(item.key)} type="checkbox" />
-            {item.text}
-        </label>
+    <label className="panel-block">
+      <input type="checkbox" checked={item.done} onChange={handleChange} />
+      <span className={item.done ? "has-text-grey-light" : ""}>
+        {item.text}
+      </span>
+    </label>
   );
 }
 

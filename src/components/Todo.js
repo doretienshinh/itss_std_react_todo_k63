@@ -10,7 +10,7 @@ import useFbStorage from '../hooks/fbStorage';
 
 function Todo() {
   const [items, addItem, updateItem, clearItems] = useFbStorage();
-
+  
   const [filter, setFilter] = React.useState('ALL');
 
   const displayItems = items.filter(item => {
@@ -18,16 +18,16 @@ function Todo() {
     if (filter === 'TODO') return !item.done;
     if (filter === 'DONE') return item.done;
   });
-
+  
   const handleCheck = checked => {
     updateItem(checked);
   };
-
+  
   const handleAdd = text => {
     // putItems([...items, { key: getKey(), text, done: false }]);
     addItem({ text, done: false });
   };
-
+  
   const handleFilterChange = value => setFilter(value);
 
   return (
@@ -52,9 +52,8 @@ function Todo() {
           onCheck={handleCheck}
         />
       ))}
-      <div className="panel-block">
-        {displayItems.length} items
-      </div>
+      <div className="panel-block">{items.length} items</div>
+     
       <div className="panel-block">
         <button className="button is-light is-fullwidth" onClick={clearItems}>
           全てのToDoを削除
